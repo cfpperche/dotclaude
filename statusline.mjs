@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // StatusLine — model, project, branch, cost, context progress bar, rate limits.
-// Adapted from anthill statusline (cfpperche/anthill) — domain-agnostic version.
+// Domain-agnostic. Per-machine cache; no project-specific state.
 //
 // Cache lives at ~/.cache/dotclaude/statusline/ (per-machine, gitignored).
 // Each session writes its tokens snapshot and current context marker, used by

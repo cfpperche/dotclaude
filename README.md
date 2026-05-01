@@ -8,6 +8,20 @@ that lives in the user's home directory and works the same way across **WSL,
 Linux, and macOS**. It's the "dotfiles for your AI agent": shareable,
 versioned, portable.
 
+**Profession-agnostic.** dotclaude doesn't assume you're a software
+engineer. It works for anyone who has files on a computer:
+
+- **Developers** — cross-repo work, git-aware, stack detection
+- **Lawyers** — review contracts, compare drafts, track matters
+- **Architects** — survey CAD revisions, draft specs alongside drawings
+- **Researchers** — index notes, surface forgotten threads, cite sources
+- **Writers** — manage manuscripts across folders, track revisions
+- **Economists / analysts** — re-run models, update reports
+- **Anyone else** — the agent adapts to what's in the folder
+
+The two universal MCP servers (memory + filesystem) install for
+everyone. Dev-leaning MCPs (playwright, github) are opt-in.
+
 ## What it gives you
 
 - **Identity that follows you across machines** — global `CLAUDE.md` defines
@@ -165,11 +179,29 @@ All scripts in `scripts/` are idempotent:
 
 See `CLAUDE.md` for the full set.
 
-## Stack-awareness
+## Context-awareness
 
-The agent detects the user's stack before suggesting commands or patterns.
-It will not run `npm` in a Python project, `cargo` in a Node project, or
-`composer` outside PHP. Detection rules in `CLAUDE.md`.
+The agent detects what kind of project it's in before suggesting commands
+or patterns. Stack-awareness (language / package manager / build / test)
+is one *case* — for code projects. For non-code projects (writing,
+research, design, legal review) it adapts the conventions accordingly.
+It won't run `npm` in a Python project, won't suggest `git commit` in a
+folder that isn't a repo, won't assume "the test suite" exists. Detection
+rules in `CLAUDE.md`.
+
+## Autonomy
+
+The agent acts autonomously by default. It only asks for confirmation
+on two kinds of actions:
+
+- **External-world actions** (visible to others): pushing, opening PRs,
+  sending messages, deploying, spending money.
+- **Authorization-required actions** (irreversible): `rm -rf`, force
+  push, hard reset, dropping data, overwriting another machine's state.
+
+For everything else (reading, editing, running tests, exploring,
+managing memory, local commits), the agent decides and acts. See
+`CLAUDE.md` for the full autonomy contract.
 
 ## Contributing
 
