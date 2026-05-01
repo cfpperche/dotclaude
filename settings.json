@@ -38,5 +38,30 @@
 
   "_mcp_servers_note": "MCP server registration goes here when activated. See mcp/README.md for the inventory and install steps. Format reference: https://modelcontextprotocol.io/docs/quickstart/server",
 
-  "mcpServers": {}
+  "mcpServers": {},
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "$HOME/.claude/hooks/session-start-load-handoff.sh" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "$HOME/.claude/hooks/session-end-write-handoff.sh" }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "$HOME/.claude/hooks/pre-commit-secrets-scan.sh" }
+        ]
+      }
+    ]
+  }
 }
