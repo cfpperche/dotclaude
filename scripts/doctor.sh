@@ -88,8 +88,15 @@ fi
 header "Layout"
 for d in agents skills hooks commands memory/synced memory/local handoff/archive mcp scripts; do
 	if [ -d "$DOTCLAUDE_DIR/$d" ]; then
-		count=$(find "$DOTCLAUDE_DIR/$d" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')
-		check_pass "$d ($count files)"
+		# skills convention is skills/<name>/SKILL.md — recurse for skills,
+		# flat for everything else
+		if [ "$d" = "skills" ]; then
+			count=$(find "$DOTCLAUDE_DIR/$d" -mindepth 1 -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')
+			check_pass "$d ($count skills)"
+		else
+			count=$(find "$DOTCLAUDE_DIR/$d" -maxdepth 1 -type f 2>/dev/null | wc -l | tr -d ' ')
+			check_pass "$d ($count files)"
+		fi
 	else
 		check_warn "$d: missing"
 	fi
