@@ -14,10 +14,12 @@ green "==> dotclaude update"
 # Refuse to overwrite tracked-file changes (modified, staged, deleted, etc).
 # Untracked files (?? prefix) are tolerated — they don't conflict with
 # git pull --ff-only and are common after a fresh cutover.
-DIRTY=$(git status --short | grep -vE '^\?\?' | wc -l | tr -d ' ')
+# Note: pipe to awk instead of grep to avoid exit 1 on zero matches under
+# pipefail.
+DIRTY=$(git status --short | awk '!/^\?\?/' | wc -l | tr -d ' ')
 if [ "$DIRTY" -gt 0 ]; then
 	yellow "Local changes to tracked files:"
-	git status --short | grep -vE '^\?\?'
+	git status --short | awk '!/^\?\?/'
 	echo
 	yellow "Stash or commit before update. Aborting."
 	exit 1
