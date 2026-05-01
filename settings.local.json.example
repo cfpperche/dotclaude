@@ -1,0 +1,27 @@
+{
+  "_comment": "Per-machine overrides. Copy to settings.local.json and adjust. NEVER commit.",
+  "_machine_id_example": "wsl-desktop-bgg95na | linux-laptop-tuxedo | macos-mbp-m3",
+
+  "permissions": {
+    "_comment_machine_specific_paths": "Add machine-specific allowed paths here",
+    "additionalDirectories": []
+  },
+
+  "_env_secrets_example": {
+    "_comment": "If you need to expose env vars to MCP servers per-machine, list them here. Read in MCP env: blocks via ${env:VAR_NAME}",
+    "GITHUB_TOKEN_DOTCLAUDE": "<your-fine-grained-token-here>",
+    "OPENAI_API_KEY": "<if-needed-for-some-mcp>"
+  },
+
+  "_mcp_overrides_example": {
+    "_comment": "Override or disable MCP servers per-machine. Set value to null to disable.",
+    "mcpServers": {
+      "playwright": null,
+      "memory": {
+        "env": {
+          "MEMORY_DB": "/Users/me/.claude/memory/db.sqlite"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schemas/settings.schema.json",
+  "_comment": "Shared settings — versioned. Per-machine overrides live in settings.local.json (gitignored).",
+
+  "theme": "dark-ansi",
+
+  "statusLine": {
+    "type": "command",
+    "command": "node $HOME/.claude/statusline.mjs"
+  },
+
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "/tmp"
+    ],
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(rg:*)",
+      "Bash(jq:*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(git rev-parse*)",
+      "Bash(gh repo view*)",
+      "Bash(gh issue view*)",
+      "Bash(gh pr view*)",
+      "Bash(gh api*)"
+    ]
+  },
+
+  "skipDangerousModePermissionPrompt": true,
+
+  "_mcp_servers_note": "MCP server registration goes here when activated. See mcp/README.md for the inventory and install steps. Format reference: https://modelcontextprotocol.io/docs/quickstart/server",
+
+  "mcpServers": {}
+}

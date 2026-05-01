@@ -1,0 +1,78 @@
+# ============================================================================
+# dotclaude — gitignore
+# ============================================================================
+# This repo lives at ~/.claude/. Everything below is RUNTIME state that Claude
+# Code generates and must NOT be versioned: it grows unbounded, contains private
+# session data, and is per-machine. Source-of-truth files (CLAUDE.md, agents/,
+# skills/, hooks/, settings.json, etc.) are tracked.
+
+# ----------------------------------------------------------------------------
+# Credentials — NEVER commit
+# ----------------------------------------------------------------------------
+.credentials.json
+*.key
+*.pem
+.env
+.env.local
+**/secrets/
+**/*.secret
+
+# ----------------------------------------------------------------------------
+# Local-only settings (template lives at settings.local.json.example)
+# ----------------------------------------------------------------------------
+settings.local.json
+
+# ----------------------------------------------------------------------------
+# Claude Code runtime — per-machine, grows unbounded
+# ----------------------------------------------------------------------------
+backups/
+cache/
+debug/
+downloads/
+file-history/
+history.jsonl
+ide/
+paste-cache/
+plans/
+plugins/
+projects/
+session-env/
+sessions/
+shell-snapshots/
+state/
+stats-cache.json
+statsig/
+tasks/
+telemetry/
+todos/
+worktrees/
+
+# ----------------------------------------------------------------------------
+# Memory: only synced/ goes to repo; local/ stays per-machine
+# ----------------------------------------------------------------------------
+memory/local/
+memory/db.sqlite
+memory/db.sqlite-journal
+memory/*.tmp
+
+# ----------------------------------------------------------------------------
+# Handoff: keep only current.md + archive/ (last 30); pruned by hook
+# ----------------------------------------------------------------------------
+handoff/*.tmp
+
+# ----------------------------------------------------------------------------
+# Generated metrics (per-machine telemetry)
+# ----------------------------------------------------------------------------
+metrics/
+*.tsv
+
+# ----------------------------------------------------------------------------
+# OS & editor noise
+# ----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

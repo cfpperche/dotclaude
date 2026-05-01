@@ -1,0 +1,61 @@
+name: lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate JSON / YAML / shellcheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: |
+          set -e
+          fail=0
+          while IFS= read -r f; do
+            echo "Validating $f"
+            if ! jq empty "$f" 2>&1; then
+              echo "::error file=$f::Invalid JSON"
+              fail=1
+            fi
+          done < <(find . -name "*.json" -not -path "./.git/*" -not -path "./node_modules/*")
+          exit $fail
+
+      - name: Validate YAML files
+        run: |
+          set -e
+          pip install --quiet pyyaml
+          fail=0
+          while IFS= read -r f; do
+            echo "Validating $f"
+            if ! python -c "import yaml,sys; yaml.safe_load(open('$f'))" 2>&1; then
+              echo "::error file=$f::Invalid YAML"
+              fail=1
+            fi
+          done < <(find . \( -name "*.yml" -o -name "*.yaml" \) -not -path "./.git/*" -not -path "./node_modules/*")
+          exit $fail
+
+      - name: Shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          severity: error
+
+      - name: Validate skill frontmatter (basic)
+        run: |
+          set -e
+          fail=0
+          while IFS= read -r f; do
+            if ! head -1 "$f" | grep -q "^---$"; then
+              echo "::error file=$f::Skill missing frontmatter (---)"
+              fail=1
+            fi
+          done < <(find skills -name "SKILL.md" 2>/dev/null || true)
+          exit $fail
