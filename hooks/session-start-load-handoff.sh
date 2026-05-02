@@ -32,4 +32,20 @@ Topic: $TOPIC
 Full handoff: $HANDOFF
 EOF
 
+# Surface any past-due local reminders. Markers are written by scripts in
+# scripts/remind-*.sh under cron and live in handoff/reminders/.
+REMINDERS_DIR="$HOME/.claude/handoff/reminders"
+if [ -d "$REMINDERS_DIR" ]; then
+	# shellcheck disable=SC2012
+	REMINDER_FILES=$(ls -1 "$REMINDERS_DIR"/*.md 2>/dev/null || true)
+	if [ -n "$REMINDER_FILES" ]; then
+		echo ""
+		echo "[reminders] $(echo "$REMINDER_FILES" | wc -l | tr -d ' ') pending:"
+		for f in $REMINDER_FILES; do
+			TITLE=$(grep -m1 '^# ' "$f" 2>/dev/null | sed 's/^# *//' || basename "$f" .md)
+			echo "  - $TITLE ($f)"
+		done
+	fi
+fi
+
 exit 0
