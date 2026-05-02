@@ -1,7 +1,17 @@
 # dotclaude
 
 > Open-source portable Claude Code agent. Stack-aware, domain-agnostic,
-> idempotent. Drop-in `~/.claude/` for any user.
+> idempotent. Lives at `~/dotclaude/`, scoped to itself — never leaks into
+> other projects.
+
+> **Architecture note (2026-05-02):** dotclaude was originally designed as a
+> drop-in replacement for `~/.claude/` (loaded globally in every session).
+> That model leaked the dotclaude identity, skills, hooks and memory into
+> every other project on the machine, conflicting with project-specific
+> CLAUDE.md files. The repo now installs at `~/dotclaude/` instead, and is
+> only active when the user opens a Claude Code session there
+> (`cd ~/dotclaude && claude`). See `docs/MIGRATION-2026-05-02.md` for the
+> full rationale and migration steps.
 
 A personal assistant for [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 that lives in the user's home directory and works the same way across **WSL,

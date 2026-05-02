@@ -1,8 +1,13 @@
 # Contributing
 
 Thanks for the interest. This repo is a portable Claude Code agent that
-anyone can install at `~/.claude/`. Contributions that **keep it portable
-and domain-agnostic** are welcome.
+installs at `~/dotclaude/` and is only active when the user opens Claude
+Code in that directory (`cd ~/dotclaude && claude`). Contributions that
+**keep it portable and domain-agnostic** are welcome.
+
+> Historical note: dotclaude originally lived at `~/.claude/` (loaded
+> globally in every session). It moved to `~/dotclaude/` on 2026-05-02 to
+> stop leaking into other projects. See `docs/MIGRATION-2026-05-02.md`.
 
 ## What's in scope
 
@@ -85,7 +90,7 @@ Update `mcp/README.md` with:
 
 ## Adding a new skill
 
-Create `skills/<skill-name>/SKILL.md` with:
+Create `.claude/skills/<skill-name>/SKILL.md` with:
 
 - YAML frontmatter (`name`, `description`, `created`, `version`,
   `argument-hint` if applicable).
@@ -95,7 +100,7 @@ Create `skills/<skill-name>/SKILL.md` with:
 
 ## Adding a new subagent
 
-Create `agents/<agent-name>.md` with:
+Create `.claude/agents/<agent-name>.md` with:
 
 - YAML frontmatter (`name`, `description`, `tools`, `model`).
 - Body explaining when the agent activates and what it produces.
@@ -103,13 +108,16 @@ Create `agents/<agent-name>.md` with:
 
 ## Adding a new hook
 
-Add the script to `hooks/` (POSIX shell, exit 0 / 2 only).
+Add the script to `.claude/hooks/` (POSIX shell, exit 0 / 2 only).
 
 - Hook must support a bypass env var for emergency repair flows
   (e.g., `DOTCLAUDE_HOOK_<NAME>=0`).
 - Document the trigger (PreToolUse, PostToolUse, SessionStart, Stop) and
-  matcher in `settings.json`.
+  matcher in `.claude/settings.json`.
 - Include a comment block explaining intent + bypass.
+- If the hook should only run inside `~/dotclaude/`, add the
+  `CLAUDE_PROJECT_DIR` guard pattern from
+  `.claude/hooks/session-start-load-handoff.sh`.
 
 ## Tests
 

@@ -1,12 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "_comment": "Shared settings — versioned. Per-machine overrides live in settings.local.json (gitignored).",
+  "_comment": "dotclaude project settings — only loaded when CWD is ~/dotclaude/. Per-machine overrides live in settings.local.json (gitignored).",
 
   "theme": "dark-ansi",
 
   "statusLine": {
     "type": "command",
-    "command": "node $HOME/.claude/statusline.mjs"
+    "command": "node $CLAUDE_PROJECT_DIR/statusline.mjs"
   },
 
   "permissions": {
@@ -36,7 +36,7 @@
 
   "skipDangerousModePermissionPrompt": true,
 
-  "_mcp_servers_note": "MCP server registration goes here when activated. See mcp/README.md for the inventory and install steps. Format reference: https://modelcontextprotocol.io/docs/quickstart/server",
+  "_mcp_servers_note": "MCP server registration goes here when activated. See mcp/README.md for the inventory and install steps.",
 
   "mcpServers": {},
 
@@ -44,14 +44,14 @@
     "SessionStart": [
       {
         "hooks": [
-          { "type": "command", "command": "$HOME/.claude/hooks/session-start-load-handoff.sh" }
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start-load-handoff.sh" }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "$HOME/.claude/hooks/session-end-write-handoff.sh" }
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-end-write-handoff.sh" }
         ]
       }
     ],
@@ -59,7 +59,7 @@
       {
         "matcher": "Bash",
         "hooks": [
-          { "type": "command", "command": "$HOME/.claude/hooks/pre-commit-secrets-scan.sh" }
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/pre-commit-secrets-scan.sh" }
         ]
       }
     ]

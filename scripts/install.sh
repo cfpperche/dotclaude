@@ -2,9 +2,13 @@
 # install.sh — bootstrap dotclaude on a new machine.
 #
 # Usage:
-#   git clone git@github.com:cfpperche/dotclaude.git ~/.claude
-#   cd ~/.claude
+#   git clone git@github.com:cfpperche/dotclaude.git ~/dotclaude
+#   cd ~/dotclaude
 #   ./scripts/install.sh
+#
+# Note: dotclaude installs at ~/dotclaude/ (not ~/.claude/) since 2026-05-02.
+# Opening Claude Code in ~/dotclaude/ activates the assistant; opening it
+# anywhere else leaves it dormant. See docs/MIGRATION-2026-05-02.md.
 
 set -euo pipefail
 

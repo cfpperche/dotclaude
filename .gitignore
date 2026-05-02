@@ -1,10 +1,11 @@
 # ============================================================================
 # dotclaude — gitignore
 # ============================================================================
-# This repo lives at ~/.claude/. Everything below is RUNTIME state that Claude
-# Code generates and must NOT be versioned: it grows unbounded, contains private
-# session data, and is per-machine. Source-of-truth files (CLAUDE.md, agents/,
-# skills/, hooks/, settings.json, etc.) are tracked.
+# This repo lives at ~/dotclaude/ (since 2026-05-02; previously ~/.claude/).
+# Everything below is RUNTIME state that Claude Code generates and must NOT be
+# versioned: it grows unbounded, contains private session data, and is
+# per-machine. Source-of-truth files (.claude/CLAUDE.md, .claude/agents/,
+# .claude/skills/, .claude/hooks/, .claude/settings.json, etc.) are tracked.
 
 # ----------------------------------------------------------------------------
 # Credentials — NEVER commit
