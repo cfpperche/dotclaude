@@ -3,12 +3,27 @@
 # Reads ~/.claude/handoff/current.md and emits a summary to the session.
 # Non-interactive: never prompts. Silent on success when nothing to load.
 # Bypass: DOTCLAUDE_HOOK_SESSION_START=0
+#
+# Project-aware: if launched inside a project that has its own CLAUDE.md
+# (and that project isn't ~/.claude itself), defer to the project's own
+# handoff convention. Mirrors the precedence rule in ~/.claude/CLAUDE.md
+# ("project's CLAUDE.md takes precedence over this file").
 
 set -eu
 
 if [ "${DOTCLAUDE_HOOK_SESSION_START:-1}" = "0" ]; then
 	exit 0
 fi
+
+# Only load global handoff when working inside the dotclaude repo itself.
+# The handoff documents work on dotclaude — it has no business surfacing in
+# any other project directory.
+# CLAUDE_PROJECT_DIR is set by Claude Code at session start; falls back to PWD.
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$PWD}"
+case "$PROJECT_DIR" in
+	"$HOME/.claude"|"$HOME/.claude"/*) ;;
+	*) exit 0 ;;
+esac
 
 HANDOFF="$HOME/.claude/handoff/current.md"
 
