@@ -59,6 +59,7 @@ memory/*.tmp
 # Handoff: keep only current.md + archive/ (last 30); pruned by hook
 # ----------------------------------------------------------------------------
 handoff/*.tmp
+handoff/.*
 
 # ----------------------------------------------------------------------------
 # Generated metrics (per-machine telemetry)
