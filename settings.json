@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/anthropics/claude-code/main/schemas/settings.schema.json",
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "_comment": "Shared settings — versioned. Per-machine overrides live in settings.local.json (gitignored).",
 
   "theme": "dark-ansi",
